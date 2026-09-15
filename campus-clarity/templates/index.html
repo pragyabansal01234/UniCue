@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}
+Clarity — Add Messages
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero hero-add reveal">
+
+    <div class="hero-copy">
+
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            CAMPUS SIGNAL, WITHOUT THE NOISE
+        </div>
+
+        <h1>
+            Fifty messages.
+            <br>
+            <span>Five priorities.</span>
+        </h1>
+
+        <p>
+            Paste your campus noise below — WhatsApp forwards,
+            emails and notices. Clarity turns the chaos into
+            updates you can actually act on.
+        </p>
+
+
+        <div class="hero-pills">
+
+            <span>✦ AI sorting</span>
+
+            <span>✓ Duplicate aware</span>
+
+            <span>⚡ Deadline focused</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-orbit" aria-hidden="true">
+
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+
+        <div class="hero-core">
+            C
+        </div>
+
+        <span class="float-chip chip-one">
+            Deadline
+        </span>
+
+        <span class="float-chip chip-two">
+            Priority
+        </span>
+
+        <span class="float-chip chip-three">
+            Notice
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<section class="panel composer-panel reveal">
+
+    <div class="panel-heading">
+
+        <div>
+
+            <p class="mini-label">
+                QUICK CAPTURE
+            </p>
+
+            <h2>
+                Drop your messages in
+            </h2>
+
+            <p class="panel-subtitle">
+                One message per line. Don't clean anything
+                up first — Clarity does that part.
+            </p>
+
+        </div>
+
+        <div class="live-badge">
+            <span></span>
+            Ready
+        </div>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('index') }}"
+        id="messageForm"
+    >
+
+        <div class="textarea-shell">
+
+            <div class="textarea-toolbar">
+
+                <span class="toolbar-label">
+                    RAW CAMPUS MESSAGES
+                </span>
+
+                <span id="charCount">
+                    0 characters
+                </span>
+
+            </div>
+
+
+            <textarea
+                name="messages"
+                id="messagesInput"
+                maxlength="12000"
+                placeholder="Paste each message on a new line...
+
+Example:
+
+[CSE Group] Assignment deadline tomorrow 11:59 PM
+[Placement Cell] TCS NQT registration closes 16th Sept, 60 seats left"
+            ></textarea>
+
+
+            <div class="textarea-footer">
+
+                <span id="lineCount">
+                    0 messages
+                </span>
+
+                <span>
+                    Max 12,000 characters
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                type="button"
+                class="btn-secondary btn-large"
+                id="loadSampleBtn"
+            >
+                <span>✦</span>
+                Load sample
+            </button>
+
+
+            <button
+                type="submit"
+                class="btn-primary btn-large"
+                id="submitBtn"
+            >
+                <span>
+                    Process with AI
+                </span>
+
+                <span class="btn-arrow">
+                    →
+                </span>
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div
+        class="processing-indicator"
+        id="processingIndicator"
+    >
+
+        <span class="processing-ring"></span>
+
+        <div>
+
+            <strong>
+                Clarity is sorting your messages…
+            </strong>
+
+            <span>
+                Finding deadlines, duplicates and actual priorities.
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="how-grid reveal">
+
+    <div class="how-card">
+
+        <span class="how-number">
+            01
+        </span>
+
+        <div class="how-icon">
+            ⌁
+        </div>
+
+        <h3>
+            Paste everything
+        </h3>
+
+        <p>
+            Forward the messy stuff exactly as it arrives.
+        </p>
+
+    </div>
+
+
+    <div class="how-card">
+
+        <span class="how-number">
+            02
+        </span>
+
+        <div class="how-icon">
+            ✦
+        </div>
+
+        <h3>
+            Let Clarity sort it
+        </h3>
+
+        <p>
+            Important dates and priorities rise to the top.
+        </p>
+
+    </div>
+
+
+    <div class="how-card">
+
+        <span class="how-number">
+            03
+        </span>
+
+        <div class="how-icon">
+            ✓
+        </div>
+
+        <h3>
+            Act with confidence
+        </h3>
+
+        <p>
+            See what needs action now, soon, or later.
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

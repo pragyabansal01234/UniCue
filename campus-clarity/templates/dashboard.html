@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+
+{% block title %}
+Clarity — Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<section class="dashboard-hero reveal">
+
+    <div>
+
+        <div class="eyebrow dark">
+
+            <span class="eyebrow-dot"></span>
+
+            YOUR CAMPUS COMMAND CENTER
+
+        </div>
+
+
+        <h1>
+            Stay informed.
+            <br>
+            <span>Stay ahead.</span>
+        </h1>
+
+
+        <p>
+            Important campus updates, deadlines and notices —
+            all in one calm place.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-date">
+
+        <span class="date-icon">
+            ◷
+        </span>
+
+        <div>
+
+            <small>
+                TODAY
+            </small>
+
+            <strong id="todayDate">
+                15 September
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="stats-row reveal">
+
+    <div class="stat-card stat-blue">
+
+        <div class="stat-icon">
+            ✉
+        </div>
+
+        <div class="stat-copy">
+
+            <span
+                class="stat-num"
+                data-count="{{ stats.total }}"
+            >
+                0
+            </span>
+
+            <span class="stat-label">
+                Messages read
+            </span>
+
+        </div>
+
+        <span class="stat-arrow">
+            ↗
+        </span>
+
+    </div>
+
+
+
+    <div class="stat-card stat-pink">
+
+        <div class="stat-icon">
+            ◈
+        </div>
+
+        <div class="stat-copy">
+
+            <span
+                class="stat-num"
+                data-count="{{ stats.duplicates_merged }}"
+            >
+                0
+            </span>
+
+            <span class="stat-label">
+                Duplicates merged
+            </span>
+
+        </div>
+
+        <span class="stat-arrow">
+            ↗
+        </span>
+
+    </div>
+
+
+
+    <div class="stat-card stat-green">
+
+        <div class="stat-icon">
+            ★
+        </div>
+
+        <div class="stat-copy">
+
+            <span
+                class="stat-num"
+                data-count="{{ stats.priorities }}"
+            >
+                0
+            </span>
+
+            <span class="stat-label">
+                Actual priorities
+            </span>
+
+        </div>
+
+        <span class="stat-arrow">
+            ↗
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<section class="dashboard-tools reveal">
+
+    <div class="search-box">
+
+        <span>
+            ⌕
+        </span>
+
+        <input
+            id="messageSearch"
+            type="search"
+            placeholder="Search updates, groups, deadlines…"
+            autocomplete="off"
+        >
+
+        <kbd>
+            /
+        </kbd>
+
+    </div>
+
+
+    <div
+        class="filter-pills"
+        id="filterPills"
+    >
+
+        <button
+            class="filter-pill active"
+            data-filter="all"
+            type="button"
+        >
+            All
+        </button>
+
+        <button
+            class="filter-pill"
+            data-filter="now"
+            type="button"
+        >
+            Now
+        </button>
+
+        <button
+            class="filter-pill"
+            data-filter="soon"
+            type="button"
+        >
+            Soon
+        </button>
+
+        <button
+            class="filter-pill"
+            data-filter="later"
+            type="button"
+        >
+            Later
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<div
+    id="noSearchResults"
+    class="empty-box search-empty"
+    hidden
+>
+
+    <strong>
+        No matching updates
+    </strong>
+
+    <span>
+        Try a different keyword or clear the search.
+    </span>
+
+</div>
+
+
+
+<!-- NOW -->
+
+<section
+    class="dashboard-section reveal"
+    data-section="now"
+>
+
+    <div class="section-heading now-heading">
+
+        <div class="section-dot"></div>
+
+        <div>
+
+            <h2>
+                Now — Act Today
+            </h2>
+
+            <p>
+                Time-sensitive updates that deserve your attention.
+            </p>
+
+        </div>
+
+        <span class="section-count">
+            {{ now_list|length }} items
+        </span>
+
+    </div>
+
+
+    {% if now_list %}
+
+        <div class="card-stack">
+
+            {% for msg in now_list %}
+
+                {% include "_card.html" %}
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            Nothing urgent right now.
+            You're all caught up.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- SOON -->
+
+<section
+    class="dashboard-section reveal"
+    data-section="soon"
+>
+
+    <div class="section-heading soon-heading">
+
+        <div class="section-dot"></div>
+
+        <div>
+
+            <h2>
+                Soon — this week
+            </h2>
+
+            <p>
+                Useful updates you should keep on your radar.
+            </p>
+
+        </div>
+
+        <span class="section-count">
+            {{ soon_list|length }} items
+        </span>
+
+    </div>
+
+
+    {% if soon_list %}
+
+        <div class="card-stack">
+
+            {% for msg in soon_list %}
+
+                {% include "_card.html" %}
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            Nothing this week.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- LATER -->
+
+<section
+    class="dashboard-section reveal"
+    data-section="later"
+>
+
+    <div class="section-heading later-heading">
+
+        <div class="section-dot"></div>
+
+        <div>
+
+            <h2>
+                Later — worth knowing
+            </h2>
+
+            <p>
+                Not urgent, but worth keeping in mind.
+            </p>
+
+        </div>
+
+        <span class="section-count">
+            {{ later_list|length }} items
+        </span>
+
+    </div>
+
+
+    {% if later_list %}
+
+        <div class="card-stack">
+
+            {% for msg in later_list %}
+
+                {% include "_card.html" %}
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            Nothing further out yet.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- UNCERTAIN -->
+
+<section
+    class="dashboard-section reveal"
+    data-section="uncertain"
+>
+
+    <div class="section-heading uncertain-heading">
+
+        <div class="section-dot"></div>
+
+        <div>
+
+            <h2>
+                Incomplete — Clarity won't guess
+            </h2>
+
+            <p>
+                Updates that need a little more information.
+            </p>
+
+        </div>
+
+        <span class="section-count">
+            {{ uncertain_list|length }} items
+        </span>
+
+    </div>
+
+
+    {% if uncertain_list %}
+
+        <div class="uncertain-stack">
+
+            {% for msg in uncertain_list %}
+
+                <div class="uncertain-box searchable-item">
+
+                    <div>
+
+                        <strong>
+                            {{ msg.title }}
+                        </strong>
+
+                        <p>
+
+                            {% if msg.is_cancelled %}
+
+                                Marked cancelled, but new details
+                                are not confirmed yet.
+
+                            {% elif msg.missing_info %}
+
+                                Some information, such as the date,
+                                was missing in the original message.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('edit', message_id=msg.id) }}"
+                        class="fix-link"
+                    >
+                        Fix update →
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            Nothing incomplete — good sign.
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

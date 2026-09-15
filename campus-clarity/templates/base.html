@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6d5dfc">
+
+    <title>{% block title %}UniCue{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- Background decoration -->
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="brand"
+            aria-label="Clarity home"
+        >
+            <span class="brand-mark">
+                <span></span>
+            </span>
+
+            <span>UniCue</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a
+                href="{{ url_for('index') }}"
+                class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+            >
+                <span class="nav-icon">＋</span>
+                Add Message
+            </a>
+
+        </div>
+
+        <div class="nav-right">
+
+            <button
+                class="icon-button"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle theme"
+            >
+                <span id="themeIcon">☼</span>
+            </button>
+
+            <div class="profile">
+                <span class="avatar">UC</span>
+                <span class="profile-name">UniCue</span>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+    <main class="page-wrap">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- Toast notifications -->
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+    ></div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

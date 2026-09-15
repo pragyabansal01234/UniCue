@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block title %}
+Clarity — Edit Update
+{% endblock %}
+
+
+{% block content %}
+
+<section class="edit-layout">
+
+
+    <!-- LEFT SIDE -->
+
+    <div class="edit-intro reveal">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-link"
+        >
+            ← Back to dashboard
+        </a>
+
+
+        <div class="eyebrow dark">
+
+            <span class="eyebrow-dot"></span>
+
+            EDIT UPDATE
+
+        </div>
+
+
+        <h1>
+            Make it
+            <span>clear.</span>
+        </h1>
+
+
+        <p>
+            Adjust the details below so Clarity can keep
+            your campus information accurate and useful.
+        </p>
+
+
+        <div class="edit-tip">
+
+            <span>
+                ✦
+            </span>
+
+            <div>
+
+                <strong>
+                    Keep it factual
+                </strong>
+
+                <p>
+                    Only change details you can confirm.
+                    Clarity won't invent missing information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="panel edit-panel reveal">
+
+        <div class="panel-heading compact">
+
+            <div>
+
+                <p class="mini-label">
+                    UPDATE DETAILS
+                </p>
+
+                <h2>
+                    Edit this update
+                </h2>
+
+            </div>
+
+
+            <span class="edit-id">
+                #{{ msg.id }}
+            </span>
+
+        </div>
+
+
+
+        <form
+            method="POST"
+            action="{{ url_for('edit', message_id=msg.id) }}"
+            id="editForm"
+        >
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="title">
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ msg.title }}"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label for="event_date">
+                    Date
+                </label>
+
+                <input
+                    type="text"
+                    id="event_date"
+                    name="event_date"
+                    value="{{ msg.event_date or '' }}"
+                    placeholder="e.g. 16 Sept, 6 PM"
+                >
+
+            </div>
+
+
+
+            <div class="form-grid">
+
+
+                <!-- PRIORITY -->
+
+                <div class="form-group">
+
+                    <label for="urgency">
+                        Priority
+                    </label>
+
+                    <select
+                        id="urgency"
+                        name="urgency"
+                    >
+
+                        <option
+                            value="now"
+                            {% if msg.urgency == "now" %}
+                                selected
+                            {% endif %}
+                        >
+                            Now — act today
+                        </option>
+
+
+                        <option
+                            value="soon"
+                            {% if msg.urgency == "soon" %}
+                                selected
+                            {% endif %}
+                        >
+                            Soon — this week
+                        </option>
+
+
+                        <option
+                            value="later"
+                            {% if msg.urgency == "later" %}
+                                selected
+                            {% endif %}
+                        >
+                            Later — worth knowing
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Status
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                    >
+
+                        <option
+                            value="pending"
+                            {% if msg.status == "pending" %}
+                                selected
+                            {% endif %}
+                        >
+                            Pending
+                        </option>
+
+
+                        <option
+                            value="done"
+                            {% if msg.status == "done" %}
+                                selected
+                            {% endif %}
+                        >
+                            Done
+                        </option>
+
+
+                        <option
+                            value="ignored"
+                            {% if msg.status == "ignored" %}
+                                selected
+                            {% endif %}
+                        >
+                            Ignored
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LIVE PREVIEW -->
+
+            <div class="preview-strip">
+
+                <span
+                    class="preview-dot"
+                    id="previewDot"
+                ></span>
+
+
+                <div>
+
+                    <small>
+                        PREVIEW PRIORITY
+                    </small>
+
+                    <strong id="priorityPreview">
+                        Now — act today
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="btn-primary btn-large"
+                >
+                    Save changes
+                    <span>→</span>
+                </button>
+
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="btn-secondary btn-large"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+
+
+        <!-- DELETE -->
+
+        <div class="danger-zone">
+
+            <div>
+
+                <span class="danger-label">
+                    DANGER ZONE
+                </span>
+
+                <h3>
+                    Delete this update?
+                </h3>
+
+                <p>
+                    This action cannot be undone.
+                </p>
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('delete', message_id=msg.id) }}"
+                class="delete-confirm-form"
+            >
+
+                <button
+                    type="submit"
+                    class="btn-danger"
+                >
+                    Delete permanently
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+<div class="card card-{{ msg.urgency }}">
+
+    <!-- =========================
+         CARD TOP
+         ========================= -->
+
+    <div class="card-top">
+
+        <div class="card-title">
+            {{ msg.title }}
+        </div>
+
+
+        <!-- DATE + DEADLINE TIME -->
+
+        {% if msg.event_date or msg.deadline_time %}
+
+        <div class="card-when">
+
+            {% if msg.event_date %}
+                <span class="date-main">
+                    📅 {{ msg.event_date }}
+                </span>
+            {% endif %}
+
+            {% if msg.deadline_time %}
+                <span class="date-time">
+                    · {{ msg.deadline_time }}
+                </span>
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         ORIGINAL MESSAGE
+         ========================= -->
+
+    <div class="card-raw">
+        {{ msg.raw_text }}
+    </div>
+
+
+    <!-- =========================
+         TAGS
+         ========================= -->
+
+    <div class="tag-row">
+
+        {% if msg.has_conflict %}
+
+            <span class="tag tag-conflict">
+                ⚠ {{ msg.conflict_note }}
+            </span>
+
+        {% endif %}
+
+
+        {% if msg.duplicate_count > 1 %}
+
+            <span class="tag tag-duplicate">
+                {{ msg.duplicate_count }} messages merged
+            </span>
+
+        {% endif %}
+
+
+        {% if msg.seats_limited %}
+
+            <span class="tag tag-seats">
+                Limited seats
+            </span>
+
+        {% endif %}
+
+
+        {% if msg.status == "done" %}
+
+            <span class="tag tag-done">
+                ✓ Done
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         ACTION BUTTONS
+         ========================= -->
+
+    <div class="card-actions">
+
+        <a
+            href="{{ url_for('edit', message_id=msg.id) }}"
+            class="card-link"
+        >
+            ✎ Edit
+        </a>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('delete', message_id=msg.id) }}"
+            class="inline-form"
+        >
+
+            <button
+                type="submit"
+                class="card-link delete-link"
+            >
+                🗑 Delete
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
