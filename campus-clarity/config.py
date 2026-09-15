@@ -1,16 +1,20 @@
 import os
 from dotenv import load_dotenv
 
-# .env file se saari secret values load karega (API key waghera)
+# Load environment variables from .env file (for local development)
 load_dotenv()
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 class Config:
-    # Gemini API key - .env file se aayegi, kabhi bhi seedha yahan mat likhna
-    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-
-    # SQLite database ka path - project folder ke andar hi "database.db" naam se banegi
-    SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
+    # Use environment variable or fallback to a default
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'your-default-secret-key'
+    
+    # Database URI: Use external DB if provided, otherwise fallback to local SQLite
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'instance', 'database.db')
+        
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    # Flask ke forms/sessions ke liye secret key (kuch bhi random string chalega)
-    SECRET_KEY = os.environ.get("SECRET_KEY", "campus-clarity-dev-key")
+    
+    # Gemini API Key
+    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
